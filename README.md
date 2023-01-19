@@ -1,5 +1,11 @@
 # Odoo_New
 
+<h2>Content List</h2>
+
+- [Qué se Debe Saber del DESARROLLO Odoo](#qué-se-debe-saber-del-desarollo-odoo)
+- [Arquitectura y Estructura básica de una app en Odoo](#arquitectura-y-estructura-básica-de-una-app-en-odoo)
+- [Módelos Python para Aplicaciones Odoo](#módelos-python-para-aplicaciones-odoo)
+
 ## Qué se debe saber del DESAROLLO Odoo 
 
 * ¿Qué hace un desarrollador Odoo?
@@ -108,7 +114,61 @@ Se encuentra en la carpeta principal  y nos indica donde se encuentran los archi
 
 Ene ste archivo podemos hacer la declaración de módulo y especificación de metadatos del módulo, como por ejemplo, el nombre de la alicación, descripción, sitio web de creador y de autor, versión de la aplicación del módulo, la dependencia con otros módulos, fuentes: vistas, datos, imágenes; licencia, etc. 
 
+## Módelos Python para Aplicaciones Odoo 
 
+<h3> Objetos de Negocio: Modelos Odoo </h3>
+
+* Los módelos decriben objetos de negocio: Clientes, proveedores, productos, compras, etc 
+* Cada modelo en odoo es declarado como una clase en python. 
+* Un modelo tiene una lista de atributos y también puede definir su propia lógica de negocio. 
+
+<p align="center"><img width=40% src="./Pictures/ModeloOdoo.png"></p>
+
+<h3>Estructura de un Modelo</h3>
+
+* La clase se define con **class** y se utiliza mayúscula al principio de cada palabra. 
+* El nommbre del modelo se define con **_name**.
+* Los campos se definen con **fields**
+* Los campos se definen como atributos en la clase del modelo y definen qué puede almacenar el modelo y dónde. 
+
+<p align="center"><img width=70% src="./Pictures/EstructuradeunModelo.png"></p>
+
+De acuerdo al código, tenemos: 
+
+```python
+from odoo import models, fields     #Para lograr acceso a los componentes del models 
+
+class NombreClase(models.Model):    #Declaración de la clase y se declara que sea de tipo model
+    _name = 'nombre.modelo'         #Nombre del módelo
+
+    campo1 = fields.Char()          #Campos que están dentro del módelo 
+    campo2 = fields.Char()
+    campo3 = fields.Char()
+    campo4 = fields.Char()
+
+    def metodo1(self):              #Finalmente, declaramos los métodos del módelo
+        return self
+
+    def metodo2(self)
+        return self
+```
+
+<h3>Persistencia de datos en los Modelos</h3>
+
+* En Odoo existe una capa de Mapeo de Objeto-Relación o ORM por sus siglas en inglés 
+* El ORM de Odoo traduce instrucciones python a sentencias SQL. 
+* el ORM evita escribir la mayoría de sentencias SQL y proporciona servicios de extensibilidad y seguridad
+* El modelo se convierte en una tabla
+* Los campos se convierten en columnas de una tabla. 
+
+<p align="center"><img width=70% src="./Pictures/PersistenciadeDatosenlosModelos.png"></p>
+
+<h3>Tipos de Modelo</h3>
+
+* Los módelos de Odoo se crean heredando a ***Model,TransientModel*** o ***AbstractModel***
+    * Model: Modelos regulares de BD persistentes. 
+    * TransientModel: Datos temporales, almacenados en BD y automáticamente borrados de vez en cuando. 
+    * AbstractModel: Sin tablas de BD vinculados a ellos. Compartidas por múltiples modelos heredados. 
 
 
 
