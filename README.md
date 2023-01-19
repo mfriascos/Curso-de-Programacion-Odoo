@@ -170,10 +170,61 @@ class NombreClase(models.Model):    #Declaración de la clase y se declara que s
     * TransientModel: Datos temporales, almacenados en BD y automáticamente borrados de vez en cuando. 
     * AbstractModel: Sin tablas de BD vinculados a ellos. Compartidas por múltiples modelos heredados. 
 
+## Vistas XML para Aplicaciones Odoo 
 
+<h3>La Capa de Vista Odoo</h3>
 
+* La capa de vista decribe la interfaz visual de usuario
+* LAs vistas se definen mediante archivos XML que son utilizados por el marco del cliente web para generar vistas HTML con datos. 
+* En los archivos XML se definen acciones y menús. Estos son instancias de ir.ui.view. 
+* Toda vista en Odoo debe estar referenciada en el archivo __ manifest __.py en la sección data, de lo contrario Odoo no lo tomará en cuenta. 
+* un mismo módelo puede tener más de una vista. 
+* Existen diferentes tipos de vistas en Odoo que nos sirve para organizar nuestros campos fields de una forma lógica:
+    * Vistas de tipo lista
+<p align="center"><img width=70% src="./Pictures/VistasdeTipoLista.png"></p>    
+    * Vistas de tipo formulario
+<p align="center"><img width=60% src="./Pictures/VistasdeTipoFormulario.png"></p>
+    * Vista de tipo pivote
+<p align="center"><img width=60% src="./Pictures/VistasdeTipoPivote.png"></p>
+    * Vista de tipo kanban
+<p align="center"><img width=60% src="./Pictures/VistasdeTipoKanban.png"></p>
+    * Vista de tipo búsqueda
+<p align="center"><img width=30% src="./Pictures/VistasdeTipoBusqueda.png"></p>
 
+<h3>Estructura de una Vista</h3>
 
+* iniciamos con el tag 
+```xml 
+<?xml version="1.0" encoding="utf-8"?>
+```
+* Nuestra vista debe encontrarse entre el tag de 
+```xml
+<odoo></odoo>
+```
+* La vista se define con el tag 
+```xml
+<record>
+``` 
+al que se le tiene que especificar un **id** y el modelo **ir.ui.view**. Para el id anteponemos la palabra view, seguido del nombre del modelo y posteriormente el tipo de vista, separados por guion bajo. Ejemplo: view_nombre_modelo_tipovista.
+* Se debe especificar un nombre y un modelo esto se hace con los tag 
+```xml
+<field></field>
+```
+* Se especifica el cuerpo de la vista indicando que se trata de un archivo xml 
 
+La estructura de la vista quedará de esta manera: 
 
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
 
+    <record id="view_nombre_modelo_tipovista" model="ir.ui.view">
+        <field name="name">nombre.modelo.tipovista</field>
+        <field name="model">nombre.modelo</field>
+        <field name="arch" type="xml">
+            <!-- AQUÍ EL CONTENIDO DE LA VISTA -->
+        </field>
+    </record>
+
+</odoo>
+```
