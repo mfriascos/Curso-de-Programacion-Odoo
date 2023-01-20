@@ -5,6 +5,9 @@
 - [Qué se Debe Saber del DESARROLLO Odoo](#qué-se-debe-saber-del-desarollo-odoo)
 - [Arquitectura y Estructura básica de una app en Odoo](#arquitectura-y-estructura-básica-de-una-app-en-odoo)
 - [Módelos Python para Aplicaciones Odoo](#módelos-python-para-aplicaciones-odoo)
+- [Vistas XML para Aplicaciones Odoo](#vistas-xml-para-aplicaciones-odoo)
+- [Herencia en Odoo](#herencia-en-odoo)
+
 
 ## Qué se debe saber del DESAROLLO Odoo 
 
@@ -228,3 +231,188 @@ La estructura de la vista quedará de esta manera:
 
 </odoo>
 ```
+<h3>Estructura de un Formulario</h3>
+
+* Para declarar un forulario se utiliza el tag 
+```xml
+<form></form>
+```
+Se puede indicar un string como título del formulario. 
+* Se colocarán los botones y el widget de barra de estatus en la sección 
+```xml
+<header></header>.
+```
+* Los botones se declaran con 
+```xml
+<button name="nombre_funcion_python" string="Texto del boton" type="object">
+```
+* Los campos de estatus deben declarar con el nombre state y se utiliza el widget de barra de estaus: 
+```xml
+<field name="campo_estatus" widget="statusbar" readonly="1"/>
+```
+
+Continuando con el archivo XML, se introducen las líneas de la siguiente forma: 
+```xml
+        <field name="arch" type="xml">
+            <!-- AQUÍ EL CONTENIDO DE LA VISTA, EN ESTE CASO VISTA FORMULARIO -->
+            <form string="Titulo formulario">
+
+                <header>
+
+                    <button name="nombre_funcion_python" string="Texto del boton" type="object">
+                    <field name="campo_estatus" widget="statusbar" readonly="1"/>
+
+                </header>
+            </form>
+        </field>
+```
+<p align="center"><img width=70% src="./Pictures/VistaFormulario.png"></p>
+
+<h3>Contenido de un formulario(sheet)</h3>
+
+* Agregar el contenido del formulario entre los tag de 
+```xml
+<sheet></sheet>
+```
+* Se puede utilizar el tag 
+```xml
+<group></group>
+```
+Para organizar los campos dentro del formulario. Esta etiqueta inserta dos columnas y en su interior los campos se mostrarám con etiqueta. 
+* Un campo y su respectiva etiqueta ocuparán dos columnas. Si dentro de group agreagamos dos secciones más de group tendremos dos columnas de campos con su respectia etiqueta. 
+* El contenido del formulario se utilizan el tag **field** para colocar un campo del modelo. El campo atributo **widget** es opcional. 
+
+```xml
+<sheet>
+    <!-- Contenido dividido en dos columnas. Campos con etiquetas -->
+    <group>
+
+        <!-- Contenido de la columna izquierda -->
+        <group>
+            <field name="nombre_campo" widget="nombre_widget"/>
+        </group>
+
+        <!-- Contenido de la columna derecha -->
+        <group>
+            <field name="nombre_campo2"/>
+        </group>
+
+    </group>
+</sheet>
+```
+<p align="center"><img width=70% src="./Pictures/VistaSheet.png"></p>
+
+<h3>Estructura de un formulario (NoteBook)</h3>
+
+* Se llaman libretas de notas con pestañas y se utilizan para organizar un gran número de campos por tema. 
+* El elemento notebook convierte las secciones en pestañas llamadas páginas. 
+* Para agregar una libreta de notas con pestaña se utiliza el tag de 
+```xml
+<notebook></notebook>
+```
+* Para agregar una página se utiliza el tag 
+```xml
+<page></page>
+```
+Para el título de la página o pestaña se utiliza el atributo **String** mientras que para asginarle un nombre se utiliza el atributo **name**. 
+
+```xml
+<!-- Contenido agrupado en páginas o pestañas -->
+<notebook>
+
+    <page string="Titulo página (pestaña) 1" name="nombre_pagina">
+        <!-- Contenido de la página 1 -->
+    </page>
+
+    <page string="Titulo página (pestaña) 2">
+        <!-- Contenido de la página 2 -->
+    </page>
+
+</notebook>
+```
+
+<p align="center"><img width=70% src="./Pictures/VistaNotebook.png"></p>
+
+<h3>Estructura de una Vista</h3>
+
+* Iniciamos con el tag
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+```
+* Nuestra vista ebe encontrarse entre el tag de 
+```xml
+<odoo></odoo>
+```
+* La vista se define con el tag 
+```xml
+<record>
+```
+al que se tiene que especificar un **id** y el modelo **ir.ui.view**. Para el id anteponemos la palabra view, seguido del nombre del modelo y posteriormente el tipo de vista, separados por guion bajo. Ejemplo: view_nombre_modelo_tipovista. 
+* Se debe especificar un nombre y un modelo esto se hace con los tag 
+```xml
+<field></field>
+```
+* Se especifica el cuerpo de la vista indicando que se trata de un archivo xml 
+
+La estructura de la vista quedará de esta manera: 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_nombre_modelo_tipovista" model="ir.ui.view">
+        <field name="name">nombre.modelo.tipovista</field>
+        <field name="model">nombre.modelo</field>
+        <field name="arch" type="xml">
+            <!-- AQUÍ EL CONTENIDO DE LA VISTA -->
+        </field>
+    </record>
+
+</odoo>
+```
+
+<h3>Estructura de una lista</h3>
+
+* Para las vistas de tipo lista se utiliza el tag 
+```xml
+<tree></tree>
+```
+* Dentro del elemento tree se declaran los campos con la etiqueta 
+```xml
+<field>
+```
+* Cada elemeto field representará una columna en la tabla 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_nombre_modelo_tipovista" model="ir.ui.view">
+        <field name="name">nombre.modelo.tipovista</field>
+        <field name="model">nombre.modelo</field>
+        <field name="arch" type="xml">
+            <!-- AQUÍ EL CONTENIDO DE LA VISTA -->
+
+            <tree>
+
+                <!-- Contenido a manera de columnas -->
+                <field name="nombre_campo"/>
+                <field name="nombre_campo2"/>
+
+            </tree>
+            
+        </field>
+    </record>
+
+</odoo>
+```
+<p align="center"><img width=70% src="./Pictures/VistaTree.png"></p>
+
+## Herencia en Odoo
+
+* Nunca se debe modificar el código estándar de Odoo. 
+* En lugar de sobre escribir vistas o modelos existentes, Odoo nos proporciona mecanismos para heredarlos y así extenderlos de forma modular. 
+* Las herencias se utilizan para cambiar, agregar o elimiar funcionalidades existentes. Estas modificaciones pueden ser a nive modelo, vista o lógica de negocio. 
+* En el archivo __ manifest __.py, en la sección **depends** se deberá indicar los módulos o aplicaciones que contienen nuestros modelos heredados.
+
+
