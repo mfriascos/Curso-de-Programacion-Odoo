@@ -7,52 +7,36 @@
 - [Módelos Python para Aplicaciones Odoo](#módelos-python-para-aplicaciones-odoo)
 - [Vistas XML para Aplicaciones Odoo](#vistas-xml-para-aplicaciones-odoo)
 - [Herencia en Odoo](#herencia-en-odoo)
+- [Herencia en Odoo Vistas XML](#herencia-en-odoo-vistas-xml)
 
 
 ## Qué se debe saber del DESAROLLO Odoo 
 
 * ¿Qué hace un desarrollador Odoo?
-
     * Aplicaciones y /o funcionalidades nuevas: Crear un módulo nuevo con funcionalidades nuevas en el ERP 
     * Adecuación y/o ajustes a funcionalidades existentes: Ya viene empaquetado con ciertas funcionalidades, es decir que de acuerdo a un requimrimiento se realicen cambio a las funcionalidades de ese módulo 
     * Corrección de errores: Es muy probable que algún desarrollo no funcione correctamente. 
     * Reportes 
-
 * ¿Qué conocimientos se necesita?
-
     * Saber programar y/o tener lógica de programación 
     * No se requiere conocer o dominar python 
-
 * Conocimiento básico de SQL y base de datos
-    
     * En Odoo rara vez se requerirá una consulta SQL 
     * Dominar la lógica en las sentencias SQL te ayudará a entender los dominios en Odoo. 
-
-* Lenguajes de programación que se utilizamn
-
+* Lenguajes de programación que se utilizan
     * Python
     * Xml
     * Javascript
-
     * Otros no tan usados
-        
         * CSS
         * HTML
-
 * La base de datos que se utiliza es PostgreSQL
-
 * Se utiliza el ORM de Odoo para la interacción con la base de datos
-
 * Sistema Operativo con Linux en alguna de sus distribuciones
-
     * Ubuntu 20.04 o superiores
-
 * Editor de código o IDE
-
     * Visual Studio Code
-
 *  Repositorio para control de versiones de código: GITHUB
-
 * Compatibilidad con navegadores web
 
 <h3>Consejos</h3>
@@ -471,3 +455,57 @@ class NombreClase(models.Model):
         return res
 ```
 
+## Herencia en Odoo Vistas XML
+
+<h3>Herencia en Odoo</h3>
+
+* Nunca se debe modificar código estándar de Odoo 
+* en lugar de sobreescribir vistas o modelos existentes, Odoo nos proporciona mecanismos para heredarlos y así extenderlos de forma modular. 
+* Las herencias se utilizan para cambiar, agregar o eliminar funcionalidades existente. Estas modificaciones pueden ser a nivel modelo, vista o lógica de negocio. 
+* En el archivo __ manifest __.py, en la sección **depends** se deberá indicar los módulos o aplicaciones que contienen nuestros módelos. 
+
+<h3>Herencias de Vistas en Odoo</h3>
+
+* Para heredar una vista se agrega el tag **inherit_id** donde se indica el id de la vista que se desea heredar. Por ejemplo: 
+```xml
+<field name="inherit_id" ref="id_de_vista_a_heredar"/>
+```
+* Para obtener el id de la vista que se desea heredar se activa el modo debug, posteriormente se dirige a la vista que se desea heredar y se selecciona el menú **Vista de edición**
+* Se abrirá un modal del cual podemos ver nuestro id en el campo. 
+
+<p align="center"><img width=80% src="./Pictures/HerenciaVistas.png"></p>
+
+* Dentro de la sección **arch** se puede colocar tantos tags **xpath** como se deseen
+* Los elementos **xpath** permiten seleccionar y alterar contenido de la vista padre
+* En el atributo **expr** del tag xpath se selecciona el elemento de la vista. Este debe existir o de lo contrario marcará error. 
+* Para localizar un elemento con **xpath** declarado como: **< field name="descripción" />** se usa **//field[@name="descripción"].**
+* Para localizar un elemento **xpath** declarado como **< page string="Titulo página (pestaña) 1" name="nombre_pagina" >** se usa **//page[@name="nombre_pagina"]**
+*  Para localizar un elemento con **xpath** declarado como **< button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm"/>** se usa **//button[@id="draft_confirm"].
+* En el atributo position es la operación que se aplica al elemento encontrado. Puede tener diferentes valores: 
+    * inside. Dentro del elemento encontrado
+    * Replace. Reemplazará el elemento encontrado con el que se especifique
+    * Before. Colocará el nuevo elemento antes
+    * After. Colocará el nuevo elemento después. 
+    * Attributes. Modificará los atributos del elemento encontrado.
+    
+El código es así: 
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_nombre_modelo_tipovista" model="ir.ui.view">
+        <field name="name">nombre.modelo.tipovista</field>
+        <field name="model">nombre.modelo.a.heredar</field>
+        <field name="inherit_id" ref="id_de_vista_a_heredar"/>
+        <field name="arch" type="xml">
+            <!-- Busca el campo descripción y agrega campo_nuevo posicionandolo después del campo descripción -->
+
+            <xpath expr="//field[@name='descripción']" position="after">
+                <field name="campo_nuevo" string="Campo nuevo"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>
+```
