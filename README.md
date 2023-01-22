@@ -415,4 +415,59 @@ La estructura de la vista quedará de esta manera:
 * Las herencias se utilizan para cambiar, agregar o elimiar funcionalidades existentes. Estas modificaciones pueden ser a nive modelo, vista o lógica de negocio. 
 * En el archivo __ manifest __.py, en la sección **depends** se deberá indicar los módulos o aplicaciones que contienen nuestros modelos heredados.
 
+<h3>Herencia de modelos en Odoo(_INHERIT)</h3>
+
+* En el modelo, se sustituye la palabra reservada _name por la palabra reservada **_inherit** en la clase.
+* El nombre del modelo que se declare  con _inherit debe ser un modelo ya existente. 
+* Con la herencia se puede lograr: 
+    * Agregar campos nuevos a un modelo existente
+    * Anular la definición de campos de un modelo existente
+    * Agregar restricciones o funcionalidades adicionales a un modelo existente 
+    * Agregar métodos y funcionalidades nuevas a un modelo existente
+    * Anular métodos o procesos a un modelo existente. 
+
+En código, se representa así: 
+
+```Python 
+from odoo import models, fields, api
+
+class NombreClase(models.Model):
+
+    _inherit = 'modelo.a.heredar'
+
+    campo adicional = fields.Char()
+```
+
+<h3>Herencia de Modelos en Odoo (Métodos)</h3>
+
+* Una vez en un modelo heredado se puede sobreescribir por completo un método 
+* Para sobreescribir un método basta con agregar el nombre del método con la misma cantidad de parametros que el método original 
+* Dentro del método se puede invocar a la funcionalidad original hablando al método de la super clase. Para ello se utiliza **super(NombreClase,self).método_original()**
+
+en código se representa así: 
+
+```Python 
+from odoo import models, fields, api 
+
+class NombreClase(models.Model):
+
+    _inherit = 'modelo.a.heredar'
+
+    campo_adicional = fields.Char()
+
+    #===================================================================#
+    #   METODO_ORIGINAL(SELF)                                           #
+    #   Método original en el modelo heredado 'modelo.a.heredar'        #
+    #===================================================================#
+
+    def metodo_original(self):
+        # Agregar aquí funcionalidad adicional si así es requerido
+        
+        # Invocara método original de la superclase 'modelo.a.heredar'
+        res = super(NombreClase,self).metodo_original()
+
+        # Agregar aquí funcionalidad adicional si así es requerido
+
+        return res
+```
 
