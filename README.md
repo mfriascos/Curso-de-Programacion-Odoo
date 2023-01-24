@@ -509,3 +509,14 @@ El código es así:
 
 </odoo>
 ```
+
+## Ícono en el Módulo 
+
+* Cada módulo o aplicación en Odoo puede o no tener un ícono 
+* El ícono en los módulos o aplicaciones de odoo no tienen otra función más que facilitar su reconocimiento dentro del listado de aplicaciones 
+* El ícono deseablemente debería ser cuadrado y de tamaño 140 x 140 píxeles 
+* El nombre del ícono deberá ser icon y su extensión png 
+    * **icon.png**
+* Si deseamos agregar un ícono a nuestro módulo debemos agregarlo a la ruta **static/description**
+* Odoo reconocerá la imagen y la mostrará como ícono de nuestro módulo
+
