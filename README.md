@@ -520,3 +520,22 @@ El código es así:
 * Si deseamos agregar un ícono a nuestro módulo debemos agregarlo a la ruta **static/description**
 * Odoo reconocerá la imagen y la mostrará como ícono de nuestro módulo
 
+## Modo Debug o Modo Desarrollador
+
+* Qué es el modo debug o modo desarrollador ? 
+    * Es una funcionalidad que nos ofrece Odoo para acceder a las herramientas adicionales y avanzadas del modo desarrollador
+* Cómo activo el modo debug o modo desarrollador ? 
+    * Mediante ajustes -> Nos dirigimos a ajustes/opciones generales y al final estará el boton de activar modo desarrollador
+    * Mediante URL -> Seguido de la palabra web, sin espacios ponemos ?debug=1 Para desactivar el modo desarrollador, se cambia 1 por 0 
+    * Mediante plugin en navegador. -> Se instala la extensión del navegador
+* Qué ofrece la activación del modo debug o modo desarrollador ? 
+    * Herramientas adicionales que son útiles para comprender o editar datos técnicos, como las vistas o las acciones
+    * Visualización de campos, botones, menús ocultos 
+* Quiénes usan y para qpe usar el modo debug o desarrollador? 
+* Cómo sacarle mejor provecho ? 
+    * Editar acción 
+    * Ver campos ténicos 
+    * Administrar o gestionar filtros
+    * Traducción técnica 
+    * Editar la vista actual 
+    * Editar el ControlPanelView u opciones de filtrado en el panel de búsqueda
