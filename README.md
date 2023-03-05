@@ -1,4 +1,4 @@
-# Odoo_New
+# Curso_de_Programación_Odoo
 
 <h2>Content List</h2>
 
